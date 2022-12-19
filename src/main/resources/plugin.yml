@@ -5,3 +5,5 @@ api-version: 1.19
 authors: [ MikadoBlanket ]
 description: Main System that supports most important Features
 prefix: Pentamuria
+commands:
+  bag:
