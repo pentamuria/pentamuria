@@ -1,11 +1,13 @@
 package de.pentamuria.system.main;
 
 import de.pentamuria.system.commands.COMMAND_bag;
+import de.pentamuria.system.commands.COMMAND_home;
 import de.pentamuria.system.commands.COMMAND_spawn;
 import de.pentamuria.system.commands.COMMAND_tpa;
 import de.pentamuria.system.events.DamageListener;
 import de.pentamuria.system.events.InventoryCloseListener;
 import de.pentamuria.system.manager.BagManager;
+import de.pentamuria.system.manager.HomeManager;
 import de.pentamuria.system.manager.LocationManager;
 import de.pentamuria.system.utils.SyncTimer;
 import org.bukkit.Bukkit;
@@ -24,6 +26,7 @@ public final class Main extends JavaPlugin {
     public BagManager bagManager;
     public SyncTimer syncTimer;
     public LocationManager locationManager;
+    public HomeManager homeManager;
 
     // Listen
     public ArrayList<Player> inFight = new ArrayList<Player>();
@@ -65,6 +68,9 @@ public final class Main extends JavaPlugin {
         COMMAND_tpa cCOMMAND_tpa = new COMMAND_tpa(this);
         getCommand("tpa").setExecutor(cCOMMAND_tpa);
 
+        COMMAND_home cCOMMAND_home = new COMMAND_home(this);
+        getCommand("home").setExecutor(cCOMMAND_home);
+
     }
 
     private void loadEvents() {
@@ -78,5 +84,6 @@ public final class Main extends JavaPlugin {
         bagManager = new BagManager(this);
         syncTimer = new SyncTimer(this);
         locationManager = new LocationManager(this);
+        homeManager = new HomeManager(this);
     }
 }
