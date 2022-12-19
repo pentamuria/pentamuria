@@ -7,3 +7,4 @@ description: Main System that supports most important Features
 prefix: Pentamuria
 commands:
   bag:
+  spawn:

@@ -1,11 +1,18 @@
 package de.pentamuria.system.main;
 
 import de.pentamuria.system.commands.COMMAND_bag;
+import de.pentamuria.system.commands.COMMAND_spawn;
+import de.pentamuria.system.events.DamageListener;
 import de.pentamuria.system.events.InventoryCloseListener;
 import de.pentamuria.system.manager.BagManager;
+import de.pentamuria.system.manager.LocationManager;
 import de.pentamuria.system.utils.SyncTimer;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public final class Main extends JavaPlugin {
 
@@ -15,6 +22,11 @@ public final class Main extends JavaPlugin {
     // Objects
     public BagManager bagManager;
     public SyncTimer syncTimer;
+    public LocationManager locationManager;
+
+    // Listen
+    public ArrayList<Player> inFight = new ArrayList<Player>();
+    public HashMap<Player, Player> lastDmg = new HashMap<Player, Player>();
 
     @Override
     public void onEnable() {
@@ -46,16 +58,21 @@ public final class Main extends JavaPlugin {
         COMMAND_bag cCOMMAND_bag = new COMMAND_bag(this);
         getCommand("bag").setExecutor(cCOMMAND_bag);
 
+        COMMAND_spawn cCOMMAND_spawn = new COMMAND_spawn(this);
+        getCommand("spawn").setExecutor(cCOMMAND_spawn);
+
     }
 
     private void loadEvents() {
         // Load all Event Classes
         new InventoryCloseListener(this);
+        new DamageListener(this);
     }
 
     private void loadManager() {
         // Load all Manager Classes
         bagManager = new BagManager(this);
         syncTimer = new SyncTimer(this);
+        locationManager = new LocationManager(this);
     }
 }

@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.Inventory;
 
 public class InventoryCloseListener implements Listener {
     private final Main plugin;
@@ -19,7 +18,6 @@ public class InventoryCloseListener implements Listener {
     @EventHandler
     public void onInvClose(InventoryCloseEvent e) {
         Player p = (Player) e.getPlayer();
-        Inventory invN = e.getInventory();
 
         if(e.getView().getTitle().equalsIgnoreCase("§aDein Rucksack")) {
             //plugin.bagManager.savePlayerBag(p.getUniqueId().toString(), invN);
