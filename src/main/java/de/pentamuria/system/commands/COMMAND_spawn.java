@@ -21,7 +21,6 @@ public class COMMAND_spawn implements CommandExecutor {
         if(sender instanceof Player) {
             Player p = (Player)sender;
             if(args.length == 0) {
-                // TODO: Add FightManager and check if player is in fight
                 if(!plugin.inFight.contains(p)) {
                     new SpawnCountdown(p).start(plugin);
                 } else {

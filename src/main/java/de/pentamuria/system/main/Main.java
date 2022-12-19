@@ -2,6 +2,7 @@ package de.pentamuria.system.main;
 
 import de.pentamuria.system.commands.COMMAND_bag;
 import de.pentamuria.system.commands.COMMAND_spawn;
+import de.pentamuria.system.commands.COMMAND_tpa;
 import de.pentamuria.system.events.DamageListener;
 import de.pentamuria.system.events.InventoryCloseListener;
 import de.pentamuria.system.manager.BagManager;
@@ -60,6 +61,9 @@ public final class Main extends JavaPlugin {
 
         COMMAND_spawn cCOMMAND_spawn = new COMMAND_spawn(this);
         getCommand("spawn").setExecutor(cCOMMAND_spawn);
+
+        COMMAND_tpa cCOMMAND_tpa = new COMMAND_tpa(this);
+        getCommand("tpa").setExecutor(cCOMMAND_tpa);
 
     }
 
