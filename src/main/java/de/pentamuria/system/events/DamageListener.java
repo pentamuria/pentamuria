@@ -1,12 +1,17 @@
 package de.pentamuria.system.events;
 
 import de.pentamuria.system.countdowns.FightCountdown;
+import de.pentamuria.system.countdowns.HomeCountdown;
+import de.pentamuria.system.countdowns.SpawnCountdown;
+import de.pentamuria.system.countdowns.TPACountdown;
 import de.pentamuria.system.main.Main;
 import de.pentamuria.system.utils.ActionBar;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 public class DamageListener implements Listener {
 
@@ -19,11 +24,18 @@ public class DamageListener implements Listener {
     }
 
     @EventHandler
-    public void onDamage(EntityDamageByEntityEvent e) {
+    public void onDamageByEntity(EntityDamageByEntityEvent e) {
         if(e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
+            // Stop Running Countdowns
+            HomeCountdown.stop(p);
+            SpawnCountdown.stop(p);
+            TPACountdown.stop(p);
             if(e.getDamager() instanceof Player) {
                 Player t = (Player) e.getDamager();
+                HomeCountdown.stop(t);
+                SpawnCountdown.stop(t);
+                TPACountdown.stop(t);
                 /*
                 SCENARIO 01: Player hits another player
                  */
@@ -63,9 +75,17 @@ public class DamageListener implements Listener {
                     new FightCountdown(t).stop();
                     new FightCountdown(t).start(p, plugin);
                 }
-
-
-
+            }
+        }
+    }
+    @EventHandler
+    public void onDamage(EntityDamageEvent e) {
+        if(e.getEntityType().equals(EntityType.PLAYER)) {
+            Player p = (Player) e.getEntity();
+            if(p.getLocation().getWorld().getName().equalsIgnoreCase(plugin.locationManager.getSpawn().getWorld().getName())) {
+                if(p.getLocation().distance(plugin.locationManager.getSpawn()) < plugin.locationManager.getRadius()) {
+                    e.setCancelled(true);
+                }
             }
         }
     }

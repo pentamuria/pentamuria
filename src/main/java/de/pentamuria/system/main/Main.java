@@ -1,11 +1,7 @@
 package de.pentamuria.system.main;
 
-import de.pentamuria.system.commands.COMMAND_bag;
-import de.pentamuria.system.commands.COMMAND_home;
-import de.pentamuria.system.commands.COMMAND_spawn;
-import de.pentamuria.system.commands.COMMAND_tpa;
-import de.pentamuria.system.events.DamageListener;
-import de.pentamuria.system.events.InventoryCloseListener;
+import de.pentamuria.system.commands.*;
+import de.pentamuria.system.events.*;
 import de.pentamuria.system.manager.BagManager;
 import de.pentamuria.system.manager.HomeManager;
 import de.pentamuria.system.manager.LocationManager;
@@ -71,12 +67,18 @@ public final class Main extends JavaPlugin {
         COMMAND_home cCOMMAND_home = new COMMAND_home(this);
         getCommand("home").setExecutor(cCOMMAND_home);
 
+        COMMAND_hilfe cCOMMAND_hilfe = new COMMAND_hilfe(this);
+        getCommand("hilfe").setExecutor(cCOMMAND_hilfe);
+
     }
 
     private void loadEvents() {
         // Load all Event Classes
         new InventoryCloseListener(this);
         new DamageListener(this);
+        new MoveListener(this);
+        new BlockListener(this);
+        new InventoryClickListener(this);
     }
 
     private void loadManager() {

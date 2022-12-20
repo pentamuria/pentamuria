@@ -10,3 +10,5 @@ commands:
   spawn:
   tpa:
   home:
+  hilfe:
+    aliases: ["help"]

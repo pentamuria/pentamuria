@@ -59,14 +59,14 @@ public class HomeCountdown {
 
     }
 
-    public void stop() {
+    public static void stop(Player p) {
         if(!countdown.containsKey(p)) {
             return;
         }
 
-        countdown.get(this.p).cancel();
-        this.p.sendMessage("§cCountdown abgebrochen!");
-        ActionBar.sendActionBar(this.p, "§8[§cXXXXX§8] §e§lX");
+        countdown.get(p).cancel();
+        p.sendMessage("§cCountdown abgebrochen!");
+        ActionBar.sendActionBar(p, "§8[§cXXXXX§8] §e§lX");
         countdown.remove(p);
     }
 
