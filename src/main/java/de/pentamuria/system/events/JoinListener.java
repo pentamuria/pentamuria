@@ -1,5 +1,6 @@
 package de.pentamuria.system.events;
 
+import de.pentamuria.gilde.gildensystem.GildenSystem;
 import de.pentamuria.system.main.Main;
 import de.pentamuria.system.scoreboard.CustomPlayerScoreboard;
 import org.bukkit.Bukkit;
@@ -30,7 +31,7 @@ public class JoinListener implements Listener {
         int result = random.nextInt(max + 1 - min) + min;
         int online = Bukkit.getOnlinePlayers().size();
         playerScoreboard.getCustomScoreboard(e.getPlayer())
-                .setSidebarScore(7, "§7↣ §b" + e.getPlayer().getName());
+                .setSidebarScore(7, "§7↣ " + GildenSystem.gildenSystem.gildenManager.getPlayerGildeWithColor(e.getPlayer()));
 
         playerScoreboard.getCustomScoreboard(e.getPlayer())
                 .setSidebarScore(4, "§7↣ §c" + result);
@@ -39,9 +40,8 @@ public class JoinListener implements Listener {
             playerScoreboard.getCustomScoreboard(all)
                     .setSidebarScore(1, "§7↣ §d" + online);
         }
-
         e.getPlayer().setPlayerListHeader("§7Willkommen bei §5Pentamuria!\n");
-        e.getPlayer().setPlayerListName("§cSolo §8| §c" + e.getPlayer().getName() + " §8| §c" + result + " Tode");
+        e.getPlayer().setPlayerListName("§c"+GildenSystem.gildenSystem.gildenManager.getPlayerGildeWithColor(e.getPlayer())+" §8| "+ GildenSystem.gildenSystem.gildenManager.getPlayerColor(e.getPlayer()) + e.getPlayer().getName() + " §8| §c" + result + " Tode");
         e.getPlayer().setPlayerListFooter("\n§a/help §8-> §7Alles was du wissen musst!\n\n§aViel Spaß, §b"+e.getPlayer().getName()+" §4♥");
 
     }

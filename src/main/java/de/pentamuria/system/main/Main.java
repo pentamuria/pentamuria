@@ -31,13 +31,13 @@ public final class Main extends JavaPlugin {
 
     CustomPlayerScoreboard playerScoreboard;
 
+
     @Override
     public void onEnable() {
         // Plugin startup logic
         loadCommands();
         loadEvents();
         loadManager();
-
 
         Bukkit.getConsoleSender().sendMessage(prefix + "Dieses Plugin wurde §agestartet");
 
