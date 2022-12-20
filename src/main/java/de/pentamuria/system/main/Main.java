@@ -5,6 +5,7 @@ import de.pentamuria.system.events.*;
 import de.pentamuria.system.manager.BagManager;
 import de.pentamuria.system.manager.HomeManager;
 import de.pentamuria.system.manager.LocationManager;
+import de.pentamuria.system.scoreboard.CustomPlayerScoreboard;
 import de.pentamuria.system.utils.SyncTimer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -27,6 +28,8 @@ public final class Main extends JavaPlugin {
     // Listen
     public ArrayList<Player> inFight = new ArrayList<Player>();
     public HashMap<Player, Player> lastDmg = new HashMap<Player, Player>();
+
+    CustomPlayerScoreboard playerScoreboard;
 
     @Override
     public void onEnable() {
@@ -79,6 +82,8 @@ public final class Main extends JavaPlugin {
         new MoveListener(this);
         new BlockListener(this);
         new InventoryClickListener(this);
+        loadScoreboard();
+        new JoinListener(this, playerScoreboard);
     }
 
     private void loadManager() {
@@ -87,5 +92,19 @@ public final class Main extends JavaPlugin {
         syncTimer = new SyncTimer(this);
         locationManager = new LocationManager(this);
         homeManager = new HomeManager(this);
+    }
+
+    public void loadScoreboard() {
+        playerScoreboard = new CustomPlayerScoreboard("§5Pentamuria §4♥");
+        playerScoreboard.setDefaultSidebarScore(9, " ");
+        playerScoreboard.setDefaultSidebarScore(8, "§l§a⚒ Deine Gilde");
+        playerScoreboard.setDefaultSidebarScore(7,"§7↣ §eLade...");
+        playerScoreboard.setDefaultSidebarScore(6, " ");
+        playerScoreboard.setDefaultSidebarScore(5, "§l§a♰ Deine Tode");
+        playerScoreboard.setDefaultSidebarScore(4,"§7↣ §cLade...");
+        playerScoreboard.setDefaultSidebarScore(3, " ");
+        playerScoreboard.setDefaultSidebarScore(2, "§l§a❀ Spieleranzahl");
+        playerScoreboard.setDefaultSidebarScore(1,"§7↣ §cLade...");
+        playerScoreboard.setDefaultSidebarScore(0, " ");
     }
 }
