@@ -56,7 +56,7 @@ public class FightCountdown {
 
     }
 
-    public void stop(Player d, Main main) {
+    private void stopX(Player d, Main main) {
         if(!countdown.containsKey(p)) {
             return;
         }
@@ -74,15 +74,20 @@ public class FightCountdown {
 
 
     }
-    public void stop() {
+    public static void stop(Player p, Main plugin) {
         if(!countdown.containsKey(p)) {
             return;
         }
 
-
-        countdown.get(this.p).cancel();
+        countdown.get(p).cancel();
         countdown.remove(p);
-        ActionBar.sendActionBar(this.p, "§8[§cXXXXX§8] §e§lX");
+        ActionBar.sendActionBar(p, "§8[§cXXXXX§8] §e§lX");
+        if(plugin.inFight.contains(p)) {
+            plugin.inFight.remove(p);
+            p.sendMessage("§aDu bist nun nicht mehr im Kampf");
+
+        }
+        plugin.lastDmg.remove(p);
     }
     private void sendBar(int count) {
         // §8[§c§8

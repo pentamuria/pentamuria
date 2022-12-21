@@ -26,8 +26,11 @@ public class BlockListener implements Listener {
                 int zahl = (int)e.getBlock().getLocation().distance(plugin.locationManager.getSpawn());
                 int minus = plugin.locationManager.getRadius()-zahl;
                 ActionBar.sendActionBar(p, "§cHier kannst du nichts abbauen §8| §bNoch §6" + minus + " §bBlöcke");
+                return;
             }
         }
+        plugin.statsAPI.stats.getPlayerStats(p.getUniqueId().toString()).addBreakedBlocks();
+
     }
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
@@ -38,7 +41,10 @@ public class BlockListener implements Listener {
                 int zahl = (int)e.getBlock().getLocation().distance(plugin.locationManager.getSpawn());
                 int minus = plugin.locationManager.getRadius()-zahl;
                 ActionBar.sendActionBar(p, "§cHier kannst du nichts hinbauen §8| §bNoch §6" + minus + " §bBlöcke");
+                return;
             }
         }
+        plugin.statsAPI.stats.getPlayerStats(p.getUniqueId().toString()).addPlacedBlocks();
     }
+
 }

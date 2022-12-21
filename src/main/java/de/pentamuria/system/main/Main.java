@@ -1,5 +1,7 @@
 package de.pentamuria.system.main;
 
+import de.pentamuria.gilde.gildensystem.GildenSystem;
+import de.pentamuria.statistics.statisticsapi.StatisticsAPI;
 import de.pentamuria.system.commands.*;
 import de.pentamuria.system.events.*;
 import de.pentamuria.system.manager.BagManager;
@@ -31,6 +33,8 @@ public final class Main extends JavaPlugin {
 
     CustomPlayerScoreboard playerScoreboard;
 
+    public StatisticsAPI statsAPI;
+    public GildenSystem gildenSystem;
 
     @Override
     public void onEnable() {
@@ -39,10 +43,28 @@ public final class Main extends JavaPlugin {
         loadEvents();
         loadManager();
 
+        Bukkit.getConsoleSender().sendMessage("§7-----------§8[§5Pentamuria§8]§7-----------");
         Bukkit.getConsoleSender().sendMessage(prefix + "Dieses Plugin wurde §agestartet");
 
         // Start Synchro
         syncTimer.start();
+
+        // Load APIS
+        if(Bukkit.getServer().getPluginManager().getPlugin("StatisticsAPI")!=null) {
+            statsAPI = (StatisticsAPI) Bukkit.getServer().getPluginManager().getPlugin("StatisticsAPI");
+            Bukkit.getConsoleSender().sendMessage(pr + "Verbindung zur §aStatisticsAPI §7wurde §ainitialisiert");
+        } else {
+            Bukkit.getConsoleSender().sendMessage(pr + "Verbindung zur §aStatisticsAPI §ist §4fehlgeschlagen");
+            Bukkit.getConsoleSender().sendMessage(pr + "§cBitte sofort die §aStatisticsAPI §chinzufügen");
+        }
+        if(Bukkit.getServer().getPluginManager().getPlugin("GildenSystem")!=null) {
+            gildenSystem = (GildenSystem) Bukkit.getServer().getPluginManager().getPlugin("GildenSystem");
+            Bukkit.getConsoleSender().sendMessage(pr + "Verbindung zum §aGildenSystem §7wurde §ainitialisiert");
+        } else {
+            Bukkit.getConsoleSender().sendMessage(pr + "Verbindung zum §aGildenSystem §ist §4fehlgeschlagen");
+            Bukkit.getConsoleSender().sendMessage(pr + "§cBitte sofort das §aGildenSystem §chinzufügen");
+        }
+        Bukkit.getConsoleSender().sendMessage("§7---------------------------------");
 
     }
 
@@ -84,6 +106,7 @@ public final class Main extends JavaPlugin {
         new InventoryClickListener(this);
         loadScoreboard();
         new JoinListener(this, playerScoreboard);
+        new DeathListener(this, playerScoreboard);
     }
 
     private void loadManager() {

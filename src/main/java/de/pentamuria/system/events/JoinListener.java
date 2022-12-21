@@ -24,24 +24,23 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
-        Random random = new Random();
-        int max = 20;
-        int min = 1;
-
-        int result = random.nextInt(max + 1 - min) + min;
         int online = Bukkit.getOnlinePlayers().size();
         playerScoreboard.getCustomScoreboard(e.getPlayer())
                 .setSidebarScore(7, "§7↣ " + GildenSystem.gildenSystem.gildenManager.getPlayerGildeWithColor(e.getPlayer()));
 
         playerScoreboard.getCustomScoreboard(e.getPlayer())
-                .setSidebarScore(4, "§7↣ §c" + result);
+                .setSidebarScore(4, "§7↣ §c" + plugin.statsAPI.stats.getPlayerStats(e.getPlayer().getUniqueId().toString()).getDeaths());
 
         for(Player all : Bukkit.getOnlinePlayers()) {
             playerScoreboard.getCustomScoreboard(all)
                     .setSidebarScore(1, "§7↣ §d" + online);
         }
         e.getPlayer().setPlayerListHeader("§7Willkommen bei §5Pentamuria!\n");
-        e.getPlayer().setPlayerListName("§c"+GildenSystem.gildenSystem.gildenManager.getPlayerGildeWithColor(e.getPlayer())+" §8| "+ GildenSystem.gildenSystem.gildenManager.getPlayerColor(e.getPlayer()) + e.getPlayer().getName() + " §8| §c" + result + " Tode");
+        if(GildenSystem.gildenSystem.gildenManager.getPlayerGilde(e.getPlayer().getUniqueId().toString()).equalsIgnoreCase("Solo") || GildenSystem.gildenSystem.gildenManager.getPlayerGilde(e.getPlayer().getUniqueId().toString()).equalsIgnoreCase("Keine")) {
+            e.getPlayer().setPlayerListName("§a" + e.getPlayer().getName() + " §8| §c" + plugin.statsAPI.stats.getPlayerStats(e.getPlayer().getUniqueId().toString()).getDeaths() + " Tode");
+        } else {
+            e.getPlayer().setPlayerListName("§c"+GildenSystem.gildenSystem.gildenManager.getPlayerGildeWithColor(e.getPlayer())+" §8| "+ GildenSystem.gildenSystem.gildenManager.getPlayerColor(e.getPlayer()) + e.getPlayer().getName() + " §8| §c" + plugin.statsAPI.stats.getPlayerStats(e.getPlayer().getUniqueId().toString()).getDeaths() + " Tode");
+        }
         e.getPlayer().setPlayerListFooter("\n§a/help §8-> §7Alles was du wissen musst!\n\n§aViel Spaß, §b"+e.getPlayer().getName()+" §4♥");
 
     }

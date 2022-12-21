@@ -19,6 +19,7 @@ public class SyncTimer {
                 Bukkit.getConsoleSender().sendMessage("§7-------------[§bSynchro]-------------");
 
                 plugin.bagManager.savePlayerBags();
+                plugin.statsAPI.stats.uploadStats();
 
                 Bukkit.getConsoleSender().sendMessage("§7-------------------------------");
                 Bukkit.getConsoleSender().sendMessage(plugin.pr + "§bSynchronisation §7wurde §aerfolgreich abgeschlossen");

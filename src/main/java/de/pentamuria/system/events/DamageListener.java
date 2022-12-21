@@ -55,10 +55,10 @@ public class DamageListener implements Listener {
                     return;
                 }
                 if(plugin.inFight.contains(p)) {
-                    new FightCountdown(p).stop();
+                    FightCountdown.stop(p, plugin);
                     new FightCountdown(p).start(t, plugin);
 
-                    new FightCountdown(t).stop();
+                    FightCountdown.stop(t, plugin);
                     new FightCountdown(t).start(p, plugin);
 
 
@@ -69,10 +69,10 @@ public class DamageListener implements Listener {
                     plugin.inFight.add(t);
                     p.sendMessage("§cDu bist nun im Kampf...Verlasse den Server nicht!");
                     t.sendMessage("§cDu bist num im Kampf...Verlasse den Server nicht");
-                    new FightCountdown(p).stop();
+                    FightCountdown.stop(p, plugin);
                     new FightCountdown(p).start(t, plugin);
 
-                    new FightCountdown(t).stop();
+                    FightCountdown.stop(t, plugin);
                     new FightCountdown(t).start(p, plugin);
                 }
             }
