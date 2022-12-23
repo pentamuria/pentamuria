@@ -21,7 +21,7 @@ public class FightCountdown {
 
     public void start(Player d, Main main) {
         if(countdown.containsKey(p)) {
-            return;
+            stopSilent(p);
         }
 
         BukkitTask task = Bukkit.getScheduler().runTaskTimer(main, new Runnable() {
@@ -89,6 +89,15 @@ public class FightCountdown {
         }
         plugin.lastDmg.remove(p);
     }
+
+    private void stopSilent(Player p) {
+        if(!countdown.containsKey(p)) {
+            return;
+        }
+        countdown.get(p).cancel();
+        countdown.remove(p);
+    }
+
     private void sendBar(int count) {
         // §8[§c§8
 

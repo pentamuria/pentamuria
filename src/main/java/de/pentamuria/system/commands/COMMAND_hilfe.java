@@ -37,7 +37,7 @@ public class COMMAND_hilfe implements CommandExecutor {
                     .addLoreLine("§7").addLoreLine("§8↣ §7Teleportiere dich zu einem anderen §aSpieler")
                     .toItemStack());
 
-            inv.setItem(18, new ItemBuilder(Material.ENDER_PEARL, 1).setName("§a/stats")
+            inv.setItem(18, new ItemBuilder(Material.EMERALD, 1).setName("§a/stats")
                     .addLoreLine("§7").addLoreLine("§8↣ §7Sehe alle deine §agespeicherten Statistiken")
                     .toItemStack());
 
@@ -49,6 +49,10 @@ public class COMMAND_hilfe implements CommandExecutor {
             inv.setItem(34, new ItemBuilder(Material.DIAMOND_SWORD, 1).setName("§b/gilde")
                     .addLoreLine("§7").addLoreLine("§8↣ §7Erhalte Informationen über das §cGilden-System")
                     .addLoreLine("§cGilden §7sind das §cHerzstück §7von §5Pentamuria")
+                    .toItemStack());
+
+            inv.setItem(26, new ItemBuilder(Material.EMERALD, 1).setName("§b/trade <Spieler>")
+                    .addLoreLine("§7").addLoreLine("§8↣ §7Handel §asicher §7mit anderen Spielern")
                     .toItemStack());
 
             for(int i = 0; i<inv.getSize();i++) {

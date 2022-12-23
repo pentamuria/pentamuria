@@ -30,6 +30,7 @@ public class BlockListener implements Listener {
             }
         }
         plugin.statsAPI.stats.getPlayerStats(p.getUniqueId().toString()).addBreakedBlocks();
+        plugin.statsAPI.stats.getPlayerStats(p.getUniqueId().toString()).addBlock(e.getBlock().getType());
 
     }
     @EventHandler

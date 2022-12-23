@@ -56,5 +56,15 @@ public class JoinListener implements Listener {
             }
         }
         playerScoreboard.remove(e.getPlayer());
+
+        // Check if player is in fight
+        Player p = e.getPlayer();
+        if(plugin.inFight.contains(p)) {
+            if(plugin.lastDmg.containsKey(p)) {
+                // Kill Player and configure stats
+                p.setHealth(0.0);
+            }
+        }
+
     }
 }

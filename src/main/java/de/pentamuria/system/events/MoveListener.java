@@ -1,5 +1,6 @@
 package de.pentamuria.system.events;
 
+import de.pentamuria.gilde.countdowns.BaseCountdown;
 import de.pentamuria.system.countdowns.FightCountdown;
 import de.pentamuria.system.countdowns.HomeCountdown;
 import de.pentamuria.system.countdowns.SpawnCountdown;
@@ -27,6 +28,7 @@ public class MoveListener implements Listener {
             HomeCountdown.stop(p);
             SpawnCountdown.stop(p);
             TPACountdown.stop(p);
+            BaseCountdown.stop(p);
         }
     }
 

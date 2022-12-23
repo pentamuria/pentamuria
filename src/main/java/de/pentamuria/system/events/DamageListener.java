@@ -1,5 +1,6 @@
 package de.pentamuria.system.events;
 
+import de.pentamuria.gilde.countdowns.BaseCountdown;
 import de.pentamuria.system.countdowns.FightCountdown;
 import de.pentamuria.system.countdowns.HomeCountdown;
 import de.pentamuria.system.countdowns.SpawnCountdown;
@@ -31,6 +32,7 @@ public class DamageListener implements Listener {
             HomeCountdown.stop(p);
             SpawnCountdown.stop(p);
             TPACountdown.stop(p);
+            BaseCountdown.stop(p);
             if(e.getDamager() instanceof Player) {
                 Player t = (Player) e.getDamager();
                 HomeCountdown.stop(t);
@@ -55,10 +57,8 @@ public class DamageListener implements Listener {
                     return;
                 }
                 if(plugin.inFight.contains(p)) {
-                    FightCountdown.stop(p, plugin);
                     new FightCountdown(p).start(t, plugin);
 
-                    FightCountdown.stop(t, plugin);
                     new FightCountdown(t).start(p, plugin);
 
 
@@ -69,10 +69,8 @@ public class DamageListener implements Listener {
                     plugin.inFight.add(t);
                     p.sendMessage("§cDu bist nun im Kampf...Verlasse den Server nicht!");
                     t.sendMessage("§cDu bist num im Kampf...Verlasse den Server nicht");
-                    FightCountdown.stop(p, plugin);
                     new FightCountdown(p).start(t, plugin);
 
-                    FightCountdown.stop(t, plugin);
                     new FightCountdown(t).start(p, plugin);
                 }
             }
