@@ -26,10 +26,13 @@ public class JoinListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
         int online = Bukkit.getOnlinePlayers().size();
         playerScoreboard.getCustomScoreboard(e.getPlayer())
-                .setSidebarScore(7, "§7↣ " + GildenSystem.gildenSystem.gildenManager.getPlayerGildeWithColor(e.getPlayer()));
+                .setSidebarScore(10, "§7↣ " + GildenSystem.gildenSystem.gildenManager.getPlayerGildeWithColor(e.getPlayer()));
 
         playerScoreboard.getCustomScoreboard(e.getPlayer())
-                .setSidebarScore(4, "§7↣ §c" + plugin.statsAPI.stats.getPlayerStats(e.getPlayer().getUniqueId().toString()).getDeaths());
+                .setSidebarScore(7, "§7↣ §c" + plugin.statsAPI.stats.getPlayerStats(e.getPlayer().getUniqueId().toString()).getDeaths());
+
+        playerScoreboard.getCustomScoreboard(e.getPlayer())
+                .setSidebarScore(4, "§7↣ " + plugin.eventAPI.eventManager.getEventType().getTitle());
 
         for(Player all : Bukkit.getOnlinePlayers()) {
             playerScoreboard.getCustomScoreboard(all)

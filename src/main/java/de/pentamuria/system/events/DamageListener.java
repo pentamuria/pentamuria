@@ -1,5 +1,6 @@
 package de.pentamuria.system.events;
 
+import de.pentamuria.eventapi.manager.EventType;
 import de.pentamuria.gilde.countdowns.BaseCountdown;
 import de.pentamuria.system.countdowns.FightCountdown;
 import de.pentamuria.system.countdowns.HomeCountdown;
@@ -26,6 +27,11 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onDamageByEntity(EntityDamageByEntityEvent e) {
+        if(plugin.eventAPI.eventManager.getEventType().equals(EventType.FRIEDEN)) {
+            if(e.getDamager() instanceof Player)((Player)e.getDamager()).sendMessage(plugin.pr+"Momentan herrscht §eFrieden§7!");
+            e.setCancelled(true);
+            return;
+        }
         if(e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
             // Stop Running Countdowns
@@ -35,9 +41,6 @@ public class DamageListener implements Listener {
             BaseCountdown.stop(p);
             if(e.getDamager() instanceof Player) {
                 Player t = (Player) e.getDamager();
-                HomeCountdown.stop(t);
-                SpawnCountdown.stop(t);
-                TPACountdown.stop(t);
                 /*
                 SCENARIO 01: Player hits another player
                  */
@@ -50,12 +53,16 @@ public class DamageListener implements Listener {
                         return;
                     }
                 }
+                HomeCountdown.stop(t);
+                SpawnCountdown.stop(t);
+                TPACountdown.stop(t);
                 if(p.getName() != t.getName()) {
                     plugin.lastDmg.put(p, t);
                     plugin.lastDmg.put(t, p);
                 } else {
                     return;
                 }
+                plugin.statsAPI.stats.getPlayerStats(t.getUniqueId().toString()).addDamage(e.getDamage());
                 if(plugin.inFight.contains(p)) {
                     new FightCountdown(p).start(t, plugin);
 
@@ -74,6 +81,11 @@ public class DamageListener implements Listener {
                     new FightCountdown(t).start(p, plugin);
                 }
             }
+        } else {
+            if(e.getDamager() instanceof Player) {
+                Player p = (Player) e.getDamager();
+                plugin.statsAPI.stats.getPlayerStats(p.getUniqueId().toString()).addMobDamage(e.getDamage());
+            }
         }
     }
     @EventHandler
@@ -85,6 +97,7 @@ public class DamageListener implements Listener {
                     e.setCancelled(true);
                 }
             }
+            plugin.statsAPI.stats.getPlayerStats(p.getUniqueId().toString()).addDamageTaken(e.getDamage());
         }
     }
 }

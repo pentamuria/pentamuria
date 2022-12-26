@@ -5,10 +5,12 @@ import de.pentamuria.system.countdowns.FightCountdown;
 import de.pentamuria.system.main.Main;
 import de.pentamuria.system.scoreboard.CustomPlayerScoreboard;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 public class DeathListener implements Listener {
@@ -51,12 +53,21 @@ public class DeathListener implements Listener {
 
         // Update Scoreboards
         playerScoreboard.getCustomScoreboard(e.getPlayer())
-                .setSidebarScore(4, "§7↣ §c" + plugin.statsAPI.stats.getPlayerStats(e.getPlayer().getUniqueId().toString()).getDeaths());
+                .setSidebarScore(7, "§7↣ §c" + plugin.statsAPI.stats.getPlayerStats(e.getPlayer().getUniqueId().toString()).getDeaths());
         if(GildenSystem.gildenSystem.gildenManager.getPlayerGilde(e.getPlayer().getUniqueId().toString()).equalsIgnoreCase("Solo") || GildenSystem.gildenSystem.gildenManager.getPlayerGilde(e.getPlayer().getUniqueId().toString()).equalsIgnoreCase("Keine")) {
             e.getPlayer().setPlayerListName("§a" + e.getPlayer().getName() + " §8| §c" + plugin.statsAPI.stats.getPlayerStats(e.getPlayer().getUniqueId().toString()).getDeaths() + " Tode");
         } else {
             e.getPlayer().setPlayerListName("§c"+GildenSystem.gildenSystem.gildenManager.getPlayerGildeWithColor(e.getPlayer())+" §8| "+ GildenSystem.gildenSystem.gildenManager.getPlayerColor(e.getPlayer()) + e.getPlayer().getName() + " §8| §c" + plugin.statsAPI.stats.getPlayerStats(e.getPlayer().getUniqueId().toString()).getDeaths() + " Tode");
         }
 
+    }
+    @EventHandler
+    public void onEntityDeath(EntityDeathEvent e) {
+        if(!e.getEntityType().equals(EntityType.PLAYER)) {
+            if(e.getEntity().getKiller()!=null) {
+                Player killer = e.getEntity().getKiller();
+                plugin.statsAPI.stats.getPlayerStats(killer.getUniqueId().toString()).addMobKill();
+            }
+        }
     }
 }

@@ -13,4 +13,6 @@ commands:
   home:
   hilfe:
     aliases: ["help"]
+  regeln:
+    aliases: ["rules"]
 

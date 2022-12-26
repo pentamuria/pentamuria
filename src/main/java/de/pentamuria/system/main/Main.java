@@ -1,5 +1,6 @@
 package de.pentamuria.system.main;
 
+import de.pentamuria.eventapi.eventapi.EventAPI;
 import de.pentamuria.gilde.gildensystem.GildenSystem;
 import de.pentamuria.statistics.statisticsapi.StatisticsAPI;
 import de.pentamuria.system.commands.*;
@@ -31,10 +32,11 @@ public final class Main extends JavaPlugin {
     public ArrayList<Player> inFight = new ArrayList<Player>();
     public HashMap<Player, Player> lastDmg = new HashMap<Player, Player>();
 
-    CustomPlayerScoreboard playerScoreboard;
+    public CustomPlayerScoreboard playerScoreboard;
 
     public StatisticsAPI statsAPI;
     public GildenSystem gildenSystem;
+    public EventAPI eventAPI;
 
     @Override
     public void onEnable() {
@@ -63,6 +65,13 @@ public final class Main extends JavaPlugin {
         } else {
             Bukkit.getConsoleSender().sendMessage(pr + "Verbindung zum §aGildenSystem §ist §4fehlgeschlagen");
             Bukkit.getConsoleSender().sendMessage(pr + "§cBitte sofort das §aGildenSystem §chinzufügen");
+        }
+        if(Bukkit.getServer().getPluginManager().getPlugin("EventAPI")!=null) {
+            eventAPI = (EventAPI) Bukkit.getServer().getPluginManager().getPlugin("EventAPI");
+            Bukkit.getConsoleSender().sendMessage(pr + "Verbindung zur §5EventAPI §7wurde §ainitialisiert");
+        } else {
+            Bukkit.getConsoleSender().sendMessage(pr + "Verbindung zur §5EventAPI §ist §4fehlgeschlagen");
+            Bukkit.getConsoleSender().sendMessage(pr + "§cBitte sofort die §5EventAPI §chinzufügen");
         }
         Bukkit.getConsoleSender().sendMessage("§7---------------------------------");
 
@@ -95,6 +104,9 @@ public final class Main extends JavaPlugin {
         COMMAND_hilfe cCOMMAND_hilfe = new COMMAND_hilfe(this);
         getCommand("hilfe").setExecutor(cCOMMAND_hilfe);
 
+        COMMAND_regeln cCOMMAND_regeln = new COMMAND_regeln(this);
+        getCommand("regeln").setExecutor(cCOMMAND_regeln);
+
     }
 
     private void loadEvents() {
@@ -119,12 +131,15 @@ public final class Main extends JavaPlugin {
 
     public void loadScoreboard() {
         playerScoreboard = new CustomPlayerScoreboard("§5Pentamuria §4♥");
+        playerScoreboard.setDefaultSidebarScore(12, " ");
+        playerScoreboard.setDefaultSidebarScore(11, "§l§a⚒ Deine Gilde");
+        playerScoreboard.setDefaultSidebarScore(10,"§7↣ §eLade...");
         playerScoreboard.setDefaultSidebarScore(9, " ");
-        playerScoreboard.setDefaultSidebarScore(8, "§l§a⚒ Deine Gilde");
-        playerScoreboard.setDefaultSidebarScore(7,"§7↣ §eLade...");
+        playerScoreboard.setDefaultSidebarScore(8, "§l§a♰ Deine Tode");
+        playerScoreboard.setDefaultSidebarScore(7,"§7↣ §cLade...");
         playerScoreboard.setDefaultSidebarScore(6, " ");
-        playerScoreboard.setDefaultSidebarScore(5, "§l§a♰ Deine Tode");
-        playerScoreboard.setDefaultSidebarScore(4,"§7↣ §cLade...");
+        playerScoreboard.setDefaultSidebarScore(5, "§l§a⚘ Momentanes Event");
+        playerScoreboard.setDefaultSidebarScore(4, "§7↣ §5Lade...");
         playerScoreboard.setDefaultSidebarScore(3, " ");
         playerScoreboard.setDefaultSidebarScore(2, "§l§a❀ Spieleranzahl");
         playerScoreboard.setDefaultSidebarScore(1,"§7↣ §cLade...");

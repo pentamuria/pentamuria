@@ -19,6 +19,8 @@ public class InventoryClickListener implements Listener {
         Player p = (Player) e.getWhoClicked();
         if(e.getView().getTitle().equalsIgnoreCase("§aHilfe")) {
             e.setCancelled(true);
+        } else if(e.getView().getTitle().equalsIgnoreCase("§cRegeln")) {
+            e.setCancelled(true);
         }
     }
 

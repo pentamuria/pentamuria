@@ -1,5 +1,6 @@
 package de.pentamuria.system.events;
 
+import de.pentamuria.eventapi.manager.EventType;
 import de.pentamuria.system.main.Main;
 import de.pentamuria.system.utils.ActionBar;
 import org.bukkit.entity.Player;
@@ -31,6 +32,9 @@ public class BlockListener implements Listener {
         }
         plugin.statsAPI.stats.getPlayerStats(p.getUniqueId().toString()).addBreakedBlocks();
         plugin.statsAPI.stats.getPlayerStats(p.getUniqueId().toString()).addBlock(e.getBlock().getType());
+        if(plugin.eventAPI.eventManager.getEventType().equals(EventType.LEVEL_UP)) {
+            e.setExpToDrop(e.getExpToDrop()*2);
+        }
 
     }
     @EventHandler
