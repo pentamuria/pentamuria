@@ -2,13 +2,13 @@ package de.pentamuria.system.main;
 
 import de.pentamuria.eventapi.eventapi.EventAPI;
 import de.pentamuria.gilde.gildensystem.GildenSystem;
+import de.pentamuria.scoreboard.pentamuriascoreboardapi.PentamuriaScoreboardAPI;
 import de.pentamuria.statistics.statisticsapi.StatisticsAPI;
 import de.pentamuria.system.commands.*;
 import de.pentamuria.system.events.*;
 import de.pentamuria.system.manager.BagManager;
 import de.pentamuria.system.manager.HomeManager;
 import de.pentamuria.system.manager.LocationManager;
-import de.pentamuria.system.scoreboard.CustomPlayerScoreboard;
 import de.pentamuria.system.utils.SyncTimer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -32,16 +32,22 @@ public final class Main extends JavaPlugin {
     public ArrayList<Player> inFight = new ArrayList<Player>();
     public HashMap<Player, Player> lastDmg = new HashMap<Player, Player>();
 
-    public CustomPlayerScoreboard playerScoreboard;
-
     public StatisticsAPI statsAPI;
     public GildenSystem gildenSystem;
     public EventAPI eventAPI;
+    public PentamuriaScoreboardAPI scoreboardAPI;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
         loadCommands();
+        if(Bukkit.getServer().getPluginManager().getPlugin("PentamuriaScoreboardAPI")!=null) {
+            scoreboardAPI = (PentamuriaScoreboardAPI) Bukkit.getServer().getPluginManager().getPlugin("PentamuriaScoreboardAPI");
+            Bukkit.getConsoleSender().sendMessage(pr + "Verbindung zur §bPentamuriaScoreboardAPI §7wurde §ainitialisiert");
+        } else {
+            Bukkit.getConsoleSender().sendMessage(pr + "Verbindung zur §bPentamuriaScoreboardAPI §ist §4fehlgeschlagen");
+            Bukkit.getConsoleSender().sendMessage(pr + "§cBitte sofort die §bPentamuriaScoreboardAPI §chinzufügen");
+        }
         loadEvents();
         loadManager();
 
@@ -116,9 +122,8 @@ public final class Main extends JavaPlugin {
         new MoveListener(this);
         new BlockListener(this);
         new InventoryClickListener(this);
-        loadScoreboard();
-        new JoinListener(this, playerScoreboard);
-        new DeathListener(this, playerScoreboard);
+        new JoinListener(this);
+        new DeathListener(this);
     }
 
     private void loadManager() {
@@ -129,20 +134,4 @@ public final class Main extends JavaPlugin {
         homeManager = new HomeManager(this);
     }
 
-    public void loadScoreboard() {
-        playerScoreboard = new CustomPlayerScoreboard("§5Pentamuria §4♥");
-        playerScoreboard.setDefaultSidebarScore(12, " ");
-        playerScoreboard.setDefaultSidebarScore(11, "§l§a⚒ Deine Gilde");
-        playerScoreboard.setDefaultSidebarScore(10,"§7↣ §eLade...");
-        playerScoreboard.setDefaultSidebarScore(9, " ");
-        playerScoreboard.setDefaultSidebarScore(8, "§l§a♰ Deine Tode");
-        playerScoreboard.setDefaultSidebarScore(7,"§7↣ §cLade...");
-        playerScoreboard.setDefaultSidebarScore(6, " ");
-        playerScoreboard.setDefaultSidebarScore(5, "§l§a⚘ Momentanes Event");
-        playerScoreboard.setDefaultSidebarScore(4, "§7↣ §5Lade...");
-        playerScoreboard.setDefaultSidebarScore(3, " ");
-        playerScoreboard.setDefaultSidebarScore(2, "§l§a❀ Spieleranzahl");
-        playerScoreboard.setDefaultSidebarScore(1,"§7↣ §cLade...");
-        playerScoreboard.setDefaultSidebarScore(0, " ");
-    }
 }

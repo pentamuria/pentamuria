@@ -2,7 +2,6 @@ package de.pentamuria.system.events;
 
 import de.pentamuria.gilde.gildensystem.GildenSystem;
 import de.pentamuria.system.main.Main;
-import de.pentamuria.system.scoreboard.CustomPlayerScoreboard;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,29 +13,23 @@ import java.util.Random;
 
 public class JoinListener implements Listener {
     private final Main plugin;
-    private CustomPlayerScoreboard playerScoreboard;
 
-    public JoinListener(Main main, CustomPlayerScoreboard playerScoreboard) {
+    public JoinListener(Main main) {
         this.plugin = main;
-        this.playerScoreboard = playerScoreboard;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         int online = Bukkit.getOnlinePlayers().size();
-        playerScoreboard.getCustomScoreboard(e.getPlayer())
-                .setSidebarScore(10, "§7↣ " + GildenSystem.gildenSystem.gildenManager.getPlayerGildeWithColor(e.getPlayer()));
+        plugin.scoreboardAPI.getPlayerScoreboard().updateGilde(e.getPlayer(), GildenSystem.gildenSystem.gildenManager.getPlayerGildeWithColor(e.getPlayer()));
 
-        playerScoreboard.getCustomScoreboard(e.getPlayer())
-                .setSidebarScore(7, "§7↣ §c" + plugin.statsAPI.stats.getPlayerStats(e.getPlayer().getUniqueId().toString()).getDeaths());
+        plugin.scoreboardAPI.getPlayerScoreboard().updateDeaths(e.getPlayer(), plugin.statsAPI.stats.getPlayerStats(e.getPlayer().getUniqueId().toString()).getDeaths());
 
-        playerScoreboard.getCustomScoreboard(e.getPlayer())
-                .setSidebarScore(4, "§7↣ " + plugin.eventAPI.eventManager.getEventType().getTitle());
+        plugin.scoreboardAPI.getPlayerScoreboard().updateEvent(e.getPlayer(), plugin.eventAPI.eventManager.getEventType().getTitle());
 
         for(Player all : Bukkit.getOnlinePlayers()) {
-            playerScoreboard.getCustomScoreboard(all)
-                    .setSidebarScore(1, "§7↣ §d" + online);
+            plugin.scoreboardAPI.getPlayerScoreboard().updatePlayers(all, online);
         }
         e.getPlayer().setPlayerListHeader("§7Willkommen bei §5Pentamuria!\n");
         if(GildenSystem.gildenSystem.gildenManager.getPlayerGilde(e.getPlayer().getUniqueId().toString()).equalsIgnoreCase("Solo") || GildenSystem.gildenSystem.gildenManager.getPlayerGilde(e.getPlayer().getUniqueId().toString()).equalsIgnoreCase("Keine")) {
@@ -54,11 +47,11 @@ public class JoinListener implements Listener {
         int online = Bukkit.getOnlinePlayers().size();
         for(Player all : Bukkit.getOnlinePlayers()) {
             if(!all.getName().equalsIgnoreCase(e.getPlayer().getName())) {
-                playerScoreboard.getCustomScoreboard(all)
-                        .setSidebarScore(1, "§7↣ §d" + (online-1));
+                plugin.scoreboardAPI.getPlayerScoreboard().updatePlayers(all, (online-1));
+
             }
         }
-        playerScoreboard.remove(e.getPlayer());
+        plugin.scoreboardAPI.getPlayerScoreboard().remove(e.getPlayer());
 
         // Check if player is in fight
         Player p = e.getPlayer();

@@ -3,7 +3,6 @@ package de.pentamuria.system.events;
 import de.pentamuria.gilde.gildensystem.GildenSystem;
 import de.pentamuria.system.countdowns.FightCountdown;
 import de.pentamuria.system.main.Main;
-import de.pentamuria.system.scoreboard.CustomPlayerScoreboard;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -15,11 +14,9 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 public class DeathListener implements Listener {
     private final Main plugin;
-    private final CustomPlayerScoreboard playerScoreboard;
 
-    public DeathListener(Main main, CustomPlayerScoreboard playerScoreboard) {
+    public DeathListener(Main main) {
         this.plugin = main;
-        this.playerScoreboard = playerScoreboard;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
@@ -52,8 +49,8 @@ public class DeathListener implements Listener {
         }
 
         // Update Scoreboards
-        playerScoreboard.getCustomScoreboard(e.getPlayer())
-                .setSidebarScore(7, "§7↣ §c" + plugin.statsAPI.stats.getPlayerStats(e.getPlayer().getUniqueId().toString()).getDeaths());
+        plugin.scoreboardAPI.getPlayerScoreboard().updateDeaths(e.getPlayer(), plugin.statsAPI.stats.getPlayerStats(e.getPlayer().getUniqueId().toString()).getDeaths());
+
         if(GildenSystem.gildenSystem.gildenManager.getPlayerGilde(e.getPlayer().getUniqueId().toString()).equalsIgnoreCase("Solo") || GildenSystem.gildenSystem.gildenManager.getPlayerGilde(e.getPlayer().getUniqueId().toString()).equalsIgnoreCase("Keine")) {
             e.getPlayer().setPlayerListName("§a" + e.getPlayer().getName() + " §8| §c" + plugin.statsAPI.stats.getPlayerStats(e.getPlayer().getUniqueId().toString()).getDeaths() + " Tode");
         } else {

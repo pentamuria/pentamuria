@@ -76,21 +76,28 @@
             <artifactId>GildenSystem</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>system</scope>
-            <systemPath>F:/A/MikadoBlanket/Development/Minecraft/Server/Paper 1.19.2/plugins/GildenSystem-1.0-SNAPSHOT.jar</systemPath>
+            <systemPath>C:/Users/lenni/OneDrive/_MikadoBlanket/Minecraft/Pentamuria/V7/Server/plugins/GildenSystem-1.0-SNAPSHOT.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>de.pentamuria.stats</groupId>
             <artifactId>GildenSystem</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>system</scope>
-            <systemPath>F:/A/MikadoBlanket/Development/Minecraft/Server/Paper 1.19.2/plugins/StatisticsAPI-1.0-SNAPSHOT.jar</systemPath>
+            <systemPath>C:/Users/lenni/OneDrive/_MikadoBlanket/Minecraft/Pentamuria/V7/Server/plugins/StatisticsAPI-1.0-SNAPSHOT.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>de.pentamuria.eventapi</groupId>
             <artifactId>EventAPI</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>system</scope>
-            <systemPath>F:/A/MikadoBlanket/Development/Minecraft/Server/Paper 1.19.2/plugins/EventAPI-1.0-SNAPSHOT.jar</systemPath>
+            <systemPath>C:/Users/lenni/OneDrive/_MikadoBlanket/Minecraft/Pentamuria/V7/Server/plugins/EventAPI-1.0-SNAPSHOT.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>de.pentamuria.scoreboard</groupId>
+            <artifactId>PentamuriaScoreboardAPI</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>C:/Users/lenni/OneDrive/_MikadoBlanket/Minecraft/Pentamuria/V7/Server/plugins/PentamuriaScoreboardAPI-1.0-SNAPSHOT.jar</systemPath>
         </dependency>
     </dependencies>
 </project>
