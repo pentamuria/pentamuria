@@ -24,6 +24,11 @@ public class DeathListener implements Listener {
     public void onDeath(PlayerDeathEvent e) {
         Player p = e.getPlayer();
         e.setDeathMessage(null);
+
+        if(p.isDead()) {
+            return;
+        }
+
         // Add Death to Stats
         plugin.statsAPI.stats.getPlayerStats(p.getUniqueId().toString()).addDeath();
 

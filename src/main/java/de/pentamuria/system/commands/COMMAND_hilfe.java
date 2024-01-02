@@ -41,8 +41,8 @@ public class COMMAND_hilfe implements CommandExecutor {
                     .addLoreLine("§7").addLoreLine("§8↣ §7Sehe alle deine §agespeicherten Statistiken")
                     .toItemStack());
 
-            inv.setItem(28, new ItemBuilder(Material.CHEST, 1).setName("§b/bag")
-                    .addLoreLine("§7").addLoreLine("§8↣ §7Öffne deinen eigenen §eRucksack §7und")
+            inv.setItem(28, new ItemBuilder(Material.ENDER_CHEST, 1).setName("§b/bag §7| §b/gilde bag")
+                    .addLoreLine("§7").addLoreLine("§8↣ §7Öffne deinen/euren eigenen §eRucksack §7und")
                             .addLoreLine("§7verstaue alle deine §eItems")
                     .toItemStack());
 
@@ -53,6 +53,14 @@ public class COMMAND_hilfe implements CommandExecutor {
 
             inv.setItem(26, new ItemBuilder(Material.EMERALD, 1).setName("§b/trade <Spieler>")
                     .addLoreLine("§7").addLoreLine("§8↣ §7Handel §asicher §7mit anderen Spielern")
+                    .toItemStack());
+
+            inv.setItem(20, new ItemBuilder(Material.ENCHANTED_BOOK, 1).setName("§d/be menu")
+                    .addLoreLine("§7").addLoreLine("§8↣ §7Entdecke komplett neue §dVerzauberungen")
+                    .toItemStack());
+
+            inv.setItem(24, new ItemBuilder(Material.CHEST, 1).setName("§9/gilde chest <§alock§7|§cunlock§7>")
+                    .addLoreLine("§7").addLoreLine("§8↣ §7Entdecke komplett neue §dVerzauberungen")
                     .toItemStack());
 
             for(int i = 0; i<inv.getSize();i++) {
